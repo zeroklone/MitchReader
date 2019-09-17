@@ -1,0 +1,62 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/zeroklone/projects/MitchReader/MitchReader.csproj": {}
+  },
+  "projects": {
+    "/Users/zeroklone/projects/MitchReader/MitchReader.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/zeroklone/projects/MitchReader/MitchReader.csproj",
+        "projectName": "MitchReader",
+        "projectPath": "/Users/zeroklone/projects/MitchReader/MitchReader.csproj",
+        "packagesPath": "/Users/zeroklone/.nuget/packages/",
+        "outputPath": "/Users/zeroklone/projects/MitchReader/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/zeroklone/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "(, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
