@@ -9,6 +9,8 @@ public class MitchReader{
     /// <param name="deviceFile"></param>
     public static void StartCaptureSample(FileInfo deviceFile, string jsonFileName){
         var messageCount = 0;
+        // Open a filestream object, fead that to the binary reader
+        // While those are open, open a stream writer to write the results of decoding to a json file
         using (var fileStream = new FileStream(deviceFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
         using (var binaryReader = new BinaryReader(fileStream)){
             using(StreamWriter writer = new StreamWriter(jsonFileName)){
@@ -26,9 +28,13 @@ public class MitchReader{
                             var messageDataBuilder = new StringBuilder();
                             Array.ForEach(messageWithHeader.Value.Data, x => messageDataBuilder.Append(x+","));
 
+                            // In order to continue reading from the Data payload I need to convert
+                            // the object into a memory stream then feed that memory stream to a Binary Reader
+
                             using (var memoryStream = new MemoryStream(messageWithHeader.Value.Data)){
                                 using (var dataBinaryReader = new BinaryReader(memoryStream)){
-
+                                    // Each case handles a different type of message
+                                    // The Message types can be found in the attached specification.
                                     switch(messageWithHeader.Value.MessageType){
                                         case "53":
                                             var systemEventMessageBody = SystemEvent.BuildSystemEventMessage(dataBinaryReader, messageWithHeader.Value.Id);
@@ -157,6 +163,7 @@ public class MitchReader{
         }
         return null;
     }
+
     // public static byte[] CorrectEndianness(this byte[] value, Endianness endianness)
     // {
     //     switch (endianness)
@@ -181,7 +188,7 @@ public class MitchReader{
         public byte[] Data;
         public string MessageTypeString;
         /// <summary>
-        /// Constructs a ExtractionMessage structure from a list of bytes
+        /// Constructs a ExtractionMessage structure from a sequence of bytes
         /// </summary>
         /// <param name="binaryReader"></param>
         /// <returns></returns>
@@ -1102,16 +1109,11 @@ public class MitchReader{
     }
     static void Main(string[] args){
             
-            string path = "/Users/zeroklone/projects/jse_datamine/JSE_EQM_MITCHDATA_20190805.bin";
-            FileInfo fi1 = new FileInfo(path);
-            StartCaptureSample(fi1, "JSE_EQM_MITCHDATA_20190805.json");
+            string inputfilename = "JSE_EQM_MITCHDATA_YYYYMMDD.bin";
+            FileInfo inputfile = new FileInfo(inputfilename);
+            string outputfilename = "JSE_EQM_MITCHDATA_YYYYMMDD.json";
+            StartCaptureSample(inputfile, outputfilename);
             Console.WriteLine("JSE_EQM_MITCHDATA_20190805");
 
-            // Console.WriteLine( 
-            // "This example of the BitConverter.IsLittleEndian field " +
-            // "generates \nthe following output when run on " +
-            // "x86-class computers.\n");
-            // Console.WriteLine( "IsLittleEndian:  {0}", 
-            // BitConverter.IsLittleEndian );
         }
 }
